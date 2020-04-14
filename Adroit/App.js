@@ -1,75 +1,38 @@
 import * as React from 'react';
-import { Platform, StatusBar, StyleSheet, View ,Text ,Dimensions ,SafeAreaView, ScrollView } from 'react-native';
-import { SplashScreen } from 'expo';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
+import { Button, View } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import Header from './components/Header';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import Constants from 'expo-constants';
-import { Button } from 'react-native';
-import { Image, TouchableOpacity, YellowBox } from 'react-native';
-import { DrawerNavigator, StackNavigator } from 'react-navigation';
+import Home from './screens/Home'
 
-const window = Dimensions.get("window");
-const screen = Dimensions.get("screen");
-
-const STATUSBAR_HEIGHT = Platform.OS === 'android' ? 10 : StatusBar.currentHeight;
-
-
-function App() {
-
-
-
+function HomeScreen({ navigation }) {
   return (
-     <View style={styles.container}>
-        <View style={styles.statusBar} />
-         <Header/>
-         <ScrollView>
-         <View style={styles.platform}>
-            <View style={styles.components}></View>
-            <View style={styles.components}></View>
-            <View style={styles.components}></View>
-            <View style={styles.components}></View>
-            <View style={styles.components}></View>
-            <View style={styles.components}></View>
-            <View style={styles.components}></View>
-            <View style={styles.components}></View>
-            <View style={styles.components}></View>
-            <View style={styles.components}></View>
-            <View style={styles.components}></View>
-            <View style={styles.components}></View>
-           </View>
-         </ScrollView>
-      </View>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        onPress={() => navigation.navigate('Notifications')}
+        title="Go to notifications"
+      />
+    </View>
+  );
+}
 
-    )
-} 
+function NotificationsScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button onPress={() => navigation.goBack()} title="Go back home" />
+    </View>
+  );
+}
 
+const Drawer = createDrawerNavigator();
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  statusBar: {
-    backgroundColor: 'white',
-    height: Constants.statusBarHeight,
-  },
-  platform: {
-    flex:1,
-    backgroundColor: '#111110',
-    paddingTop:5
-  },
-  components: {
-    height: 100,
-    backgroundColor: '#282c34',
-    margin:6,
-    padding:4,
-    borderRadius: 10,
-  }
-});
-
-export default App
+export default function App() {
+  return (
+    <NavigationContainer >
+      <Drawer.Navigator drawerStyle={{backgroundColor: '#c6cbef'}} initialRouteName="Home">
+        <Drawer.Screen  style={{backgroundColor: 'black'}} name="Home" component={Home} />
+        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}

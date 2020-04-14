@@ -16,10 +16,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "androidStatusBar": {
-      "translucent": true,
-      "barStyle": "dark-content",
-    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -28,6 +24,10 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+      "android": {
+      "package": "examrevision.herokuapp.com",
+      "versionCode": 1
     }
   }
 }
