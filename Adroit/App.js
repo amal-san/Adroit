@@ -12,19 +12,18 @@ import {
 function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
-     <View style={{padding:2,}}>  
+    <View style={{paddingTop:20}}></View>
+     <View style={{flex:1,backgroundColor: 'black',justifyContent:'center',flexDirection: 'row',}}>  
+      <View> 
       <Image
-        style={{height:150,width:100,flex:1,justifyContent: 'center',borderRadius: 30,alignItems: 'center'}}
+        style={{height:130,width:130,borderRadius: 70,}}
         source={{
           uri: 'https://avatars1.githubusercontent.com/u/42336393',
         }}
       />
+      <Text style={{color:'white',paddingTop:10,marginLeft:15}}> Amal Santhosh </Text>
+      </View>
      </View> 
-    <DrawerItem
-        label="Amal Santhosh P"
-        inactiveTintColor="white"
-        style={{padding:10}}
-      />
       <DrawerItemList {...props} />
     </DrawerContentScrollView> 
   );
