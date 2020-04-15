@@ -12,21 +12,23 @@ import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import 'react-native-gesture-handler';
 import Header from './../components/Header'
 import { useIsDrawerOpen } from '@react-navigation/drawer';
+import { NavigationContext } from '@react-navigation/native';
 
 
 const window = Dimensions.get("window");
 const screen = Dimensions.get("screen");
 
 
+class Home extends React.Component {
+  static contextType = NavigationContext;
 
+  render() {
+    // We can access navigation object via context
+    const navigation = this.context;
+    return (
 
-
-function Home({ navigation }) {
-
-
-  return (
-     <View style={styles.container}>
-        <Header />
+      <View style={styles.container}>
+        <Header/>
          <ScrollView>
          <View style={styles.platform}>
             <View style={styles.components}></View>
@@ -45,10 +47,11 @@ function Home({ navigation }) {
          </ScrollView>
       </View>
 
-    )
-} 
 
 
+      )
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
