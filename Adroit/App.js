@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Header from './components/Header';
 import Home from './screens/Home';
+import WS from 'react-native-websocket'
 import {
   DrawerContentScrollView,
   DrawerItemList,DrawerItem
@@ -31,13 +32,37 @@ function CustomDrawerContent(props) {
 
 
 
-function NotificationsScreen({ navigation }) {
+export default class LockDesktop extends Component {
+
+  render () {
+    return (
+      <View style={{flex: 1}}>
+        <WS
+          ref={ref => {this.ws = ref}}
+          url="wss://echo.websocket.org/"
+          onOpen={() => {
+            console.log('Open!')
+            this.ws.send('Hello')
+          }}
+          onMessage={console.log}
+          onError={console.log}
+          onClose={console.log}
+          reconnect // Will try to reconnect onClose
+        />
+      </View>
+    )
+  }
+}
+
+
+function DeskTopScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Button onPress={() => navigation.goBack()} title="Go back home" />
     </View>
   );
 }
+
 
 const Drawer = createDrawerNavigator();
 
@@ -46,7 +71,7 @@ export default function App() {
     <NavigationContainer >
       <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />} drawerStyle={{ backgroundColor: 'black'}} drawerContentOptions={{activeTintColor: 'green',inactiveTintColor:'white',activeBackgroundColor:'#111110'}} initialRouteName="Home">
         <Drawer.Screen  style={{backgroundColor: 'black'}} name="Home" component={Home} />
-        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+        <Drawer.Screen name="Desktop" component={DeskTopScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
