@@ -22,9 +22,12 @@ const screen = Dimensions.get("screen");
 class Home extends React.Component {
   static contextType = NavigationContext;
 
+
   render() {
     // We can access navigation object via context
     const navigation = this.context;
+    var ws = new WebSocket("ws://host.com/path");
+
     return (
 
       <View style={styles.container}>
@@ -32,6 +35,20 @@ class Home extends React.Component {
          <ScrollView>
          <View style={styles.platform}>
             <View style={styles.components}></View>
+            <View style={styles.components}>
+                <Text> Hello </Text>
+                {/*<WS
+                  ref={ref => {this.ws = ref}}
+                  url="ws://192.168.43.148:1234/"
+                  onOpen={() => {
+                    console.log('Open!')
+                    this.ws.send('Hello')
+                  }}
+                  onMessage={console.log}
+                  onError={console.log}
+                  onClose={console.log}
+                />*/}
+            </View>
             <View style={styles.components}></View>
             <View style={styles.components}></View>
             <View style={styles.components}></View>
