@@ -14,12 +14,11 @@ class Header extends React.Component {
   render() {
     // We can access navigation object via context
     const navigation = this.context;
-    console.log(navigation)
 
     return (
     	<View style={styles.header}>
 		      	<View style={styles.icon}>
-		      		<Text onPress={() => {navigation.openDrawer();console.log(navigation)}}><Ionicons name="md-list" size={32} color="white" /></Text>
+		      		<Text onPress={() => {navigation.openDrawer();}}><Ionicons name="md-list" size={32} color="white" /></Text>
 		      	</View>
 		      	<View>
 					<Text style={styles.headtext}> Adroit </Text>
