@@ -11,10 +11,7 @@ import {
   DrawerItemList,DrawerItem
 } from '@react-navigation/drawer';
 import { Root, Popup } from 'popup-ui';
-import ip from './../constants/utils'
-
-
-
+ 
 
 
 const window = Dimensions.get("window");
@@ -37,7 +34,7 @@ export default class DeskTop extends Component {
 
   addIp() {
 
-    if (this.state.id) {
+    if (this.state.ip) {
     var ws = new WebSocket("ws://"+ this.state.ip +"/");
     ws.onopen = () => {
         // on connecting, do nothing but log it to the console
@@ -70,7 +67,6 @@ export default class DeskTop extends Component {
           buttontext: 'Ok',
           callback: () => Popup.hide()
       });
-      console.log(ip)
      }
 
   }
@@ -91,7 +87,7 @@ export default class DeskTop extends Component {
                   style={styles.submit}
                   onPress={this.addIp}
                 >
-                  <Text style={{paddingTop:15,textAlign:'center',}}>Lock</Text>
+                  <Text style={{paddingTop:15,textAlign:'center',fontSize:17}}>Lock</Text>
                 </TouchableOpacity>
             </View> 
                </View>
@@ -153,15 +149,16 @@ container: {
     justifyContent: 'space-between' ,
   },
   textinput: {
-     width:screen.width/1.5, borderColor: 'gray', borderWidth: 1 ,backgroundColor: 'white',padding:5,margin:4,
+     width:screen.width/1.5, borderWidth: 1 ,backgroundColor: 'white',padding:5,margin:4,borderRadius: 6,fontSize:20
 
   },
   submit: {
-    backgroundColor: 'wheat',
+    backgroundColor: 'lightgreen',
     margin:4,
     borderColor: 'black',
     elevation:1,
     flex:1,
+    borderRadius: 5,
   },
 
 })

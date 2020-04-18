@@ -28,59 +28,6 @@ class Home extends React.Component {
 
 
 
-  constructor(props){
-    super(props);
-    this.state={
-      id:'',
-      submit:false,
-    }
-    this.addIp =this.addIp.bind(this);
-  }
-
-
-  addIp() {
-
-    if (this.state.id) {
-    var ws = new WebSocket("ws://"+ this.state.id +"/");
-    ws.onopen = () => {
-        // on connecting, do nothing but log it to the console
-        console.log('Message sent to ip' , this.state.id)
-        ws.send('Lock')
-        this.setState({submit:true});
-        Popup.show({
-          type: 'Success',
-          title: 'System is Locked',
-          button: false,
-          textBody: 'Congrats! Your pc is Locked',
-          buttontext: 'Ok',
-          callback: () => Popup.hide()
-        })
-    }
-     Popup.show({
-          type: 'Warning',
-          title: 'IP not found',
-          button: false,
-          textBody: 'Enter correct IP address !.',
-          buttontext: 'Ok',
-          callback: () => Popup.hide()
-    })}
-    else { 
-      Popup.show({
-          type: 'Danger',
-          title: 'Please fill the field',
-          button: false,
-          textBody: 'Enter IP address !.',
-          buttontext: 'Ok',
-          callback: () => Popup.hide()
-      });
-     }
-
-    
-    
-
-
-  }
-
   render() {
     // We can access navigation object via context
     const navigation = this.context;
@@ -130,29 +77,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
 
   },
-  button : {
-    padding:10,
-    flex:1,
-    margin:10,
-  },
-  connect : {
-    backgroundColor: 'white',
-    height:55,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between' ,
-  },
-  textinput: {
-     width:screen.width/1.5, borderColor: 'gray', borderWidth: 1 ,backgroundColor: 'white',padding:5,margin:4,
-
-  },
-  submit: {
-    backgroundColor: 'wheat',
-    margin:4,
-    borderColor: 'black',
-    elevation:1,
-    flex:1,
-  }
 });
 
 export default Home
