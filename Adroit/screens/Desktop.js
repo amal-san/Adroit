@@ -11,7 +11,11 @@ import {
   DrawerItemList,DrawerItem
 } from '@react-navigation/drawer';
 import { Root, Popup } from 'popup-ui';
- 
+import * as SecureStore from 'expo-secure-store';
+import { NativeModules } from "react-native";
+import {Content } from 'native-base';
+
+
 
 
 const window = Dimensions.get("window");
@@ -23,41 +27,70 @@ export default class DeskTop extends Component {
 
   constructor(props){
     super(props);
-    this.state={
+     this.state={
       ip:'',
-      submit:false,
+      defaultip:'',
     }
     this.addIp =this.addIp.bind(this);
-
   }
 
+  componentDidMount() {
+    SecureStore.getItemAsync('ip')
+    .then(defaultip => this.setState({defaultip}) )
+  }
 
+ 
   addIp() {
 
-    if (this.state.ip) {
-    var ws = new WebSocket("ws://"+ this.state.ip +"/");
-    ws.onopen = () => {
-        // on connecting, do nothing but log it to the console
-        console.log('Message sent to ip' , this.state.ip)
+    var ip = this.state.ip
+    var reg = new RegExp('[0-9].:')
+    if (ip) {
+     if(reg.test(ip)){ 
+      var ws = new WebSocket("ws://"+ this.state.ip +"/"); 
+      ws.onopen = () => {
+        console.log('Message sent to ip' , this.state.ip) 
         ws.send('Lock')
-        this.setState({submit:true});
+        this.setState({defaultip:this.state.ip})
         Popup.show({
-          type: 'Success',
-          title: 'System is Locked',
-          button: false,
-          textBody: 'Congrats! Your pc is Locked',
-          buttontext: 'Ok',
-          callback: () => Popup.hide()
-        })
-    }
-     Popup.show({
+              type: 'Success',
+              title: 'System is Locked',
+              button: false,
+              textBody: 'Congrats! Your pc is Locked',
+              buttontext: 'Ok',
+              callback: () => Popup.hide()
+        });
+        SecureStore.setItemAsync('ip',this.state.ip)
+        this.textInput.clear()
+      }
+      ws.onerror = (e) => {
+        Popup.show({
           type: 'Warning',
           title: 'IP not found',
           button: false,
           textBody: 'Enter correct IP address !.',
           buttontext: 'Ok',
-          callback: () => Popup.hide()
-    })}
+          callback: () => Popup.hide() 
+
+      });
+             
+      };
+
+        }
+    else {
+        Popup.show({
+          type: 'Warning',
+          title: 'IP not found',
+          button: false,
+          textBody: 'Enter correct IP address !.',
+          buttontext: 'Ok',
+          callback: () => Popup.hide() 
+
+      });
+
+      }
+         
+    }
+
     else { 
       Popup.show({
           type: 'Danger',
@@ -79,9 +112,10 @@ export default class DeskTop extends Component {
          <ScrollView>
          <View style={styles.platform}>
             <View style={styles.components}>
-             <Text id="Ip"> Current IP : {this.state.submit ? this.state.ip : "Configure your Pc' IP"}</Text> 
-            <View style={styles.connect}>
-               <TextInput ref="myInput" style={styles.textinput} onChangeText={(ip) => {
+           <Content>
+             <Text id="Ip"> Current IP : {this.state.defaultip}</Text> 
+             <View style={styles.connect}>
+               <TextInput style={styles.textinput} ref={input => { this.textInput = input }} onChangeText={(ip) => {
                   this.setState({ip})}}/>
                <TouchableOpacity
                   style={styles.submit}
@@ -89,8 +123,9 @@ export default class DeskTop extends Component {
                 >
                   <Text style={{paddingTop:15,textAlign:'center',fontSize:17}}>Lock</Text>
                 </TouchableOpacity>
-            </View> 
-               </View>
+              </View> 
+            </Content>
+            </View>
             </View>
            <View style={styles.components}>
            </View>
