@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Platform, StatusBar, StyleSheet, View ,Text ,Dimensions ,SafeAreaView, ScrollView,Alert,TextInput } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View ,Dimensions ,SafeAreaView, ScrollView,Alert,TextInput ,Text } from 'react-native';
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { Button } from 'react-native';
 import { Image, TouchableOpacity, YellowBox } from 'react-native';
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import 'react-native-gesture-handler';
@@ -16,6 +15,9 @@ import { NavigationContext } from '@react-navigation/native';
 import WS from 'react-native-websocket';
 import TextField from '@material-ui/core/TextField';
 import { Root, Popup } from 'popup-ui'
+import * as Network from 'expo-network';
+
+
 
 
 
@@ -26,6 +28,11 @@ const screen = Dimensions.get("screen");
 class Home extends React.Component {
   static contextType = NavigationContext;
 
+
+  async handleNetwork() {
+   const data = await Network.getNetworkStateAsync();
+   console.log(data)
+  }
 
 
   render() {
@@ -38,8 +45,23 @@ class Home extends React.Component {
         <Header/>
          <ScrollView>
          <View style={styles.platform}>
-           <View style={styles.components}/>
-           </View>
+           <View style={styles.options}> 
+            <View style={styles.optionText}> 
+            <Text style={{fontSize: 20,color:'white'}}> Check the filesystems </Text> 
+            </View>
+             <TouchableOpacity style={styles.btn}>
+              <Text style={styles.btnText}><Ionicons name="md-arrow-forward" size={30} color="white" /></Text>
+             </TouchableOpacity>
+          </View>
+           <View style={styles.options}> 
+            <View style={styles.optionText}> 
+            <Text style={{fontSize: 20,color:'white'}}> Send message to pc </Text> 
+            </View>
+             <TouchableOpacity style={styles.btn}>
+              <Text style={styles.btnText}><Ionicons name="md-arrow-forward" size={30} color="white" /></Text>
+             </TouchableOpacity>
+          </View>
+          </View>
          </ScrollView>
       </View>
     </Root>
@@ -54,29 +76,44 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     display: 'flex',
+    backgroundColor: 'white'
 
   },
   platform: {
     flex:1,
-    backgroundColor: 'white',
-    height:screen.height-150,
-    justifyContent: 'space-around', 
-
-
+    height: screen.height,
   },
-  components: {
-    height: 100,
-    backgroundColor: 'white',
-    marginLeft:10,
-    marginRight:10,
-    marginTop:10,
-    padding:5,
+  options : {
+    height:screen.height/10,
+    backgroundColor: 'wheat',
+    margin:5,
+    marginBottom:3,
+    elevation: 2,
+    borderRadius: 5,
+    display: 'flex',
+    flexDirection: 'row', 
+    justifyContent: 'flex-end'  
+  },
+  btn : {
+    margin:15,
+    backgroundColor: 'transparent',
+    width:screen.width/6,
     borderRadius: 10,
-    justifyContent: 'flex-end',
+    padding:10,
 
   },
+  btnText : {
+    textAlign: 'center', 
+
+  },
+  optionText: {
+    flex:1,
+    paddingTop:25,
+    paddingLeft:25,
+
+  }
+
 });
 
 export default Home
