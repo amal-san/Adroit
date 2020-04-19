@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Header from './components/Header';
 import Home from './screens/Home';
 import DeskTop from './screens/Desktop';
+import Storage from './screens/Storage'
 import WS from 'react-native-websocket';
 import { NavigationContext } from '@react-navigation/native';
 import {
@@ -13,6 +14,7 @@ import {
   DrawerItemList,DrawerItem
 } from '@react-navigation/drawer';
 import { Root, Popup } from 'popup-ui'
+
 
 
 
@@ -54,6 +56,7 @@ export default function App() {
       <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />} drawerStyle={{ backgroundColor: 'black'}} drawerContentOptions={{activeTintColor: 'green',inactiveTintColor:'white',activeBackgroundColor:'#111110'}} initialRouteName="Home">
         <Drawer.Screen  style={{backgroundColor: 'black'}} name="Home" component={Home} />
         <Drawer.Screen name="Desktop" component={DeskTop} />
+        <Drawer.Screen name="Storage" component={Storage} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
