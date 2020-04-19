@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { View ,Text , StyleSheet , Platform,Alert} from 'react-native';
+import { View , StyleSheet , Platform,Alert ,Text} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContext } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/native';
 import { useIsDrawerOpen } from '@react-navigation/drawer';
+import Constants from 'expo-constants';
+import * as Font from 'expo-font';
 
 
 
@@ -17,6 +19,7 @@ class Header extends React.Component {
 
     return (
     	<View style={styles.header}>
+    			<View style={styles.statusbar}></View>
 		      	<View style={styles.icon}>
 		      		<Text onPress={() => {navigation.openDrawer();}}><Ionicons name="md-list" size={32} color="white" /></Text>
 		      	</View>
@@ -35,12 +38,12 @@ class Header extends React.Component {
 const styles = StyleSheet.create ({
 
 	header: {
-		padding:15,
+		padding:20,
 		backgroundColor: 'black',
 		display: 'flex',
 		flexDirection: 'row', 
 		justifyContent: 'flex-start',
-		marginTop:25,
+		marginTop:Constants.statusBarHeight
 	},
 	headtext : {
 		color:'white',
@@ -50,8 +53,12 @@ const styles = StyleSheet.create ({
 		marginLeft:10,
 
 	},
-	icon: {
+	statusbar: {
+	    height: Constants.statusBarHeight,
+	    backgroundColor: "black",
+
 	}
+
 	
 })
 
